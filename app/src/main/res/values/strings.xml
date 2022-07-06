@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MailApp</string>
+
+    <string name="btn_next">next</string>
 </resources>
