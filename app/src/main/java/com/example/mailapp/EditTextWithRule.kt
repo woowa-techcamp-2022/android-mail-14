@@ -2,6 +2,7 @@ package com.example.mailapp
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.widget.addTextChangedListener
 import com.example.mailapp.databinding.CompEditTextWithRuleBinding
@@ -21,19 +22,25 @@ class EditTextWithRule @JvmOverloads constructor(
     override val layoutResId: Int
         get() = R.layout.comp_edit_text_with_rule
 
+    var tagEditText: String? = null
+        get() = vd.textInputEditText.tag as? String
+        set(value) {
+            vd.textInputEditText.tag = value
+            field = value
+        }
+
     class RuleInfo(
         val title: String,
         val ruleErrorMessage: String,
         val ruleCompare: (String)->(Boolean)
     )
     private var ruleInfo: RuleInfo? = null
-    fun setRules(ruleInfo: RuleInfo){
+    private fun setRules(ruleInfo: RuleInfo){
         this.ruleInfo = ruleInfo
-//        vd.tvRule.text = ruleInfo.ruleErrorMessage
-        vd.textInputEditText.hint = ruleInfo.title
         vd.textInputLayout.hint = ruleInfo.title
     }
     fun setRules(title: String, ruleErrorMessage: String, rule: (String)->(Boolean)){
+        Log.d("TAG", "set rules => $title, $ruleErrorMessage")
         this.setRules(RuleInfo(title, ruleErrorMessage, rule))
     }
 
@@ -50,8 +57,17 @@ class EditTextWithRule @JvmOverloads constructor(
         setListener()
     }
 
+    fun setText(text: String){
+        vd.textInputEditText.setText(text)
+    }
+
     private fun setListener(){
         vd.textInputEditText.addTextChangedListener {
+            Log.d("TAG", "input [$tagEditText]=> $it")
+            if(it.isNullOrBlank()) {
+                setCheckRuleResult(true)
+                return@addTextChangedListener
+            }
             when(ruleInfo?.ruleCompare?.invoke(it.toString())){
                 true -> {
                     setCheckRuleResult(true)
@@ -65,10 +81,6 @@ class EditTextWithRule @JvmOverloads constructor(
     }
 
     private fun setCheckRuleResult(correct: Boolean){
-//        val backgroundRes = if(correct) R.drawable.background_edit_text_blue else R.drawable.background_edit_text_red
-//        vd.editText.setBackgroundResource(backgroundRes)
-//        vd.ivCorrect.visibility = (!correct).toVisible()
-//        vd.tvRule.visibility = (!correct).toVisible()
         vd.textInputLayout.error = if(correct)null else ruleInfo?.ruleErrorMessage
     }
 
