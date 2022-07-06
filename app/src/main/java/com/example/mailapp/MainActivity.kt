@@ -48,24 +48,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_navigation_view_button) // 뒤로가고 버튼 이미지 설정
         }
-
-        vd.navigationView.setNavigationItemSelectedListener {
-//            it.isChecked = true
-            vd.drawerLayout.closeDrawers()
-            when(it.itemId){
-                R.id.menu_main_navigation_view_item_primary -> {
-                    showToast("click primary")
+        vd.navigationView.apply {
+            setNavigationItemSelectedListener {
+                it.isChecked = true
+                vd.drawerLayout.closeDrawers()
+                when(it.itemId){
+                    R.id.menu_main_navigation_view_item_primary -> {
+                        showToast("click primary")
+                    }
+                    R.id.menu_main_navigation_view_item_social -> {
+                        showToast("click social")
+                    }
+                    R.id.menu_main_navigation_view_item_promotions -> {
+                        showToast("click promotions")
+                    }
                 }
-                R.id.menu_main_navigation_view_item_social -> {
-                    showToast("click social")
-                }
-                R.id.menu_main_navigation_view_item_promotions -> {
-                    showToast("click promotions")
-                }
+                true
             }
-            true
+            setCheckedItem(R.id.menu_main_navigation_view_item_primary)  // default select item
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
