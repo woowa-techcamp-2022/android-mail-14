@@ -1,4 +1,4 @@
-package com.example.mailapp
+package com.example.mailapp.view
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,4 +1,4 @@
-package com.example.mailapp
+package com.example.mailapp.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

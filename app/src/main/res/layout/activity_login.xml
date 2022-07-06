@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity"
+        tools:context=".login.LoginActivity"
         android:id="@+id/background"
         >
 
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             />
 
-        <com.example.mailapp.EditTextWithRule
+        <com.example.mailapp.view.EditTextWithRule
             app:layout_constraintTop_toBottomOf="@+id/iv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             />
 
-        <com.example.mailapp.EditTextWithRule
+        <com.example.mailapp.view.EditTextWithRule
             app:layout_constraintVertical_chainStyle="spread_inside"
             app:layout_constraintBottom_toTopOf="@+id/btnNext"
             app:layout_constraintTop_toBottomOf="@+id/editTextWithRuleNickname"
