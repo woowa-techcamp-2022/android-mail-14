@@ -1,5 +1,6 @@
 package com.example.mailapp.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,12 +37,19 @@ class LoginViewModel: BaseViewModel() {
     private var inputNicknameCorrect = false
     private var inputEmailCorrect = false
 
+
+    // 정규식 테스트 사이트 https://regex101.com/r/cO8lqs/11
     val nicknameInputHint: String = "닉네임"
     val nicknameInputRuleErrorMessage: String = "닉네임은 영문과 숫자를 결합한 4~12자로 입력해주세요"
     val nicknameInputRule: (String)->(Boolean) = {
         inputNickname = it
-        val nicknamePattern = Pattern.compile("^[a-zA-Z0-9]+$") // 숫자나 영단어로만 이루어 진 경우 걸러내도록 수정 필요
-        inputNicknameCorrect = it.length in 4..12 && nicknamePattern.matcher(it).matches()
+        val nicknamePattern = Pattern.compile("^[a-zA-Z0-9]+$")
+        Log.d("TAG", "nickname[$it] contain char => ${it.contains(Regex("^[a-z]"))}")
+        Log.d("TAG", "nickname[$it] contain num => ${it.contains(Regex("[0-9]"))}")
+        inputNicknameCorrect = it.length in 4..12 &&
+                nicknamePattern.matcher(it).matches() && // 숫자나 영단어만 허용 -> 모두 숫자나 모두 영단어로 이루어진 경우 포함
+                it.contains(Regex("^[a-z]")) && // 영단어가 포함되어있는지 
+                it.contains(Regex("[0-9]"))  // 숫자가 포함되어있는지
         _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
         inputNicknameCorrect
     }
