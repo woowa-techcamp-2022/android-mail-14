@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
+import com.example.mailapp.MainActivity
 import com.example.mailapp.view.BaseActivity
 import com.example.mailapp.databinding.ActivityLoginBinding
 
@@ -74,16 +75,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             setKeyboardShown(it, vd.background)
         }
 
-        viewModel.nextButtonEnableEvent.observe(this){
-            vd.btnNext.isEnabled = it
-        }
-
         viewModel.nicknameInput.observe(this){
             vd.editTextWithRuleNickname.setText(it)
         }
 
         viewModel.emailInput.observe(this){
             vd.editTextWithRuleEmail.setText(it)
+        }
+
+        viewModel.nextButtonEnableEvent.observe(this){
+            vd.btnNext.isEnabled = it
+        }
+
+        viewModel.successLoginEvent.observe(this){
+            startActivity(MainActivity.get(this, it.first, it.second))
         }
     }
 }

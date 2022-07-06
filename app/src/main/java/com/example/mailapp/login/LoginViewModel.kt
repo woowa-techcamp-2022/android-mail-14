@@ -25,6 +25,9 @@ class LoginViewModel: BaseViewModel() {
     private val _nextButtonEnableEvent: MutableLiveData<Boolean> = MutableLiveData()
     val nextButtonEnableEvent: LiveData<Boolean> = _nextButtonEnableEvent
 
+    private val _successLoginEvent: MutableLiveData<Pair<String, String>> = MutableLiveData()
+    val successLoginEvent: MutableLiveData<Pair<String, String>> = _successLoginEvent
+
     /**
      * data
      */
@@ -73,7 +76,11 @@ class LoginViewModel: BaseViewModel() {
     }
 
     fun nextButtonClick(){
-
+        if(inputNickname.isNullOrBlank() || inputEmail.isNullOrBlank()){
+            showToast("입력값이 올바르지 않습니다")
+            return
+        }
+        _successLoginEvent.value = inputNickname!! to inputEmail!!
     }
 
 }
