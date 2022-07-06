@@ -2,4 +2,10 @@
     <string name="app_name">MailApp</string>
 
     <string name="btn_next">next</string>
+
+    <string name="menu_main_navigation_view_header_title">WMail</string>
+
+    <string name="menu_main_navigation_view_item_primary">Primary</string>
+    <string name="menu_main_navigation_view_item_social">Social</string>
+    <string name="menu_main_navigation_view_item_promotions">Promotion</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/menu_main_navigation_view_item_primary"
+            android:icon="@drawable/ic_priority_high"
+            android:title="@string/menu_main_navigation_view_item_primary" />
+        <item
+            android:id="@+id/menu_main_navigation_view_item_social"
+            android:icon="@drawable/ic_people"
+            android:title="@string/menu_main_navigation_view_item_social" />
+        <item
+            android:id="@+id/menu_main_navigation_view_item_promotions"
+            android:icon="@drawable/ic_label"
+            android:title="@string/menu_main_navigation_view_item_promotions" />
+    </group>
+
+</menu>
