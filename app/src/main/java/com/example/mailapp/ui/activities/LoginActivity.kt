@@ -3,6 +3,7 @@ package com.example.mailapp.ui.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.mailapp.databinding.ActivityLoginBinding
 import com.example.mailapp.viewmodels.LoginViewModel
@@ -10,7 +11,7 @@ import com.example.mailapp.viewmodels.LoginViewModel
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override val vd: ActivityLoginBinding by lazy { ActivityLoginBinding.inflate(LayoutInflater.from(this)) }
-    override val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
+    override val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
