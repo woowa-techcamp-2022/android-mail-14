@@ -51,7 +51,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 viewModel.nicknameInputRuleErrorMessage,
                 viewModel.nicknameInputRule
             )
-            setTextChangedWithCorrectRule(viewModel.nicknameInputCorrectRule)
         }
 
         vd.editTextWithRuleEmail.apply {
@@ -61,7 +60,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 viewModel.emailInputRuleErrorMessage,
                 viewModel.emailInputRule
             )
-            setTextChangedWithCorrectRule(viewModel.emailInputCorrectRule)
         }
 
         vd.btnNext.setOnClickListener {

@@ -58,20 +58,12 @@ class LoginViewModel: BaseViewModel() {
         inputNicknameCorrect
     }
 
-    val nicknameInputCorrectRule: (String)->(Unit) = {
-        inputNickname = it
-    }
-
     val emailInputHint: String = "이메일"
     val emailInputRuleErrorMessage: String = "이메일 형식이 올바르지 않습니다"
     val emailInputRule: (String)->(Boolean) = {
         inputEmail = it
         inputEmailCorrect = Patterns.EMAIL_ADDRESS.matcher(it).matches()
         inputEmailCorrect
-    }
-
-    val emailInputCorrectRule: (String)->(Unit) = {
-        inputEmail = it
     }
 
     /**

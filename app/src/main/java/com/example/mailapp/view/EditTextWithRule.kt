@@ -64,17 +64,16 @@ class EditTextWithRule @JvmOverloads constructor(
     private fun setListener(){
         vd.textInputEditText.addTextChangedListener {
             Log.d("TAG", "input [$tagEditText]=> $it")
-            if(it.isNullOrBlank()) {
-                setCheckRuleResult(true)
-                return@addTextChangedListener
-            }
             when(ruleInfo?.ruleCompare?.invoke(it.toString())){
                 true -> {
                     setCheckRuleResult(true)
                     textChangedListenerWithCorrectRule?.invoke(it.toString())
                 }
                 else -> {
-                    setCheckRuleResult(false)
+                    if(it.isNullOrBlank())
+                        setCheckRuleResult(true)
+                    else
+                        setCheckRuleResult(false)
                 }
             }
         }
