@@ -2,6 +2,7 @@ package com.example.mailapp.ui.fragments
 
 import android.util.Log
 import android.view.View
+import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
 import com.example.mailapp.databinding.FragmentRailMenuBinding
@@ -37,6 +38,18 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
                     return@observe
                 }
                 vd.railNavigationView.selectedItemId = it // 잘못된 id 값이면 아무 일도 일어나지 않는다 => 내부에서 findItem 을 실시
+            }
+        }
+
+        viewModel.showMailList.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                childFragmentManager.beginTransaction().replace(R.id.containerFragmentRailMenu, MailListFragment()).commit()
+            }
+        }
+
+        viewModel.showSetting.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                childFragmentManager.beginTransaction().replace(R.id.containerFragmentRailMenu, MailListFragment()).commit()
             }
         }
     }

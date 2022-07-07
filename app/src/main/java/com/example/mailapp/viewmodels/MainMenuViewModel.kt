@@ -10,6 +10,12 @@ class MainMenuViewModel: BaseViewModel() {
     private val _selectTabId: MutableLiveData<SingleEvent<Int>> = MutableLiveData()
     val selectTabId: LiveData<SingleEvent<Int>> = _selectTabId
 
+    private val _showMailList: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
+    val showMailList: LiveData<SingleEvent<Unit>> = _showMailList
+
+    private val _showSetting: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
+    val showSetting: LiveData<SingleEvent<Unit>> = _showSetting
+
     /**
      * data
      */
@@ -28,9 +34,11 @@ class MainMenuViewModel: BaseViewModel() {
         when(id){
             R.id.menu_mail -> {
                 showToast("mail tab")
+                _showMailList.value = SingleEvent(Unit)
             }
             R.id.menu_setting -> {
                 showToast("setting tab")
+                _showSetting.value = SingleEvent(Unit)
             }
         }
     }
