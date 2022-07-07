@@ -26,12 +26,14 @@ import com.example.mailapp.viewmodels.MainViewModel
  */
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTypeSelectActivity {
     companion object {
+        private const val nicknameExtraKey = "EXTRA_NICKNAME"
+        private const val emailExtraKey = "EXTRA_EMAIL"
         fun get(context: Context?, nickname: String, email: String): Intent {
             return Intent(context, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                putExtra("EXTRA_NICKNAME", nickname)
-                putExtra("EXTRA_EMAIL", email)
+                putExtra(nicknameExtraKey, nickname)
+                putExtra(emailExtraKey, email)
             }
         }
     }
@@ -118,6 +120,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTyp
     }
 
     private fun applyFragment(fragment: Fragment, tag: String){
+        fragment.apply {
+            arguments = Bundle().apply {
+                Log.d("TAG", "extra data nick[${intent.getStringExtra(nicknameExtraKey)}], email[${intent.getStringExtra(emailExtraKey)}]")
+                putString(nicknameExtraKey, intent.getStringExtra(nicknameExtraKey))
+                putString(emailExtraKey, intent.getStringExtra(emailExtraKey))
+            }
+        }
         supportFragmentManager.beginTransaction().let {
             if(supportFragmentManager.fragments.isEmpty()) {
                 it.add(R.id.containerFragmentMain, fragment, tag).commit()

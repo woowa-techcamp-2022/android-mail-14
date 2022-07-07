@@ -49,7 +49,13 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
 
         viewModel.showSetting.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
-                childFragmentManager.beginTransaction().replace(R.id.containerFragmentRailMenu, MailListFragment()).commit()
+                childFragmentManager.beginTransaction().replace(
+                    R.id.containerFragmentRailMenu,
+                    SettingFragment.get(
+                        arguments?.getString(SettingFragment.nicknameExtraKey),
+                        arguments?.getString(SettingFragment.emailExtraKey)
+                    )
+                ).commit()
             }
         }
     }

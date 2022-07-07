@@ -11,4 +11,7 @@
 
     <string name="menu_mail">Mail</string>
     <string name="menu_setting">Setting</string>
+
+    <string name="setting_nickname_title">닉네임</string>
+    <string name="setting_email_title">이메일</string>
 </resources>
