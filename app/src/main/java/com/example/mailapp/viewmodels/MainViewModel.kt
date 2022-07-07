@@ -31,27 +31,16 @@ class MainViewModel: BaseViewModel() {
         BottomMenu("bottom_menu"),
         RailMenu("rail_menu")
     }
-    enum class MailTypeInfo(
-        val mailType: MailModel.MailType,
-        val tabMenuId: Int
-    ){
-        Primary(MailModel.MailType.Primary, R.id.menu_main_navigation_view_item_primary),
-        Social(MailModel.MailType.Social, R.id.menu_main_navigation_view_item_social),
-        Promotion(MailModel.MailType.Promotion, R.id.menu_main_navigation_view_item_promotions);
-        companion object {
-            fun get(mailType: MailModel.MailType): MailTypeInfo? {
-                values().forEach {
-                    if(it.mailType == mailType) return it
-                }
-                return null
-            }
-            fun get(tabMenuId: Int): MailTypeInfo? {
-                values().forEach {
-                    if(it.tabMenuId == tabMenuId) return it
-                }
-                return null
-            }
+    private val mailInfo = mapOf(
+        R.id.menu_main_navigation_view_item_primary to MailModel.MailType.Primary,
+        R.id.menu_main_navigation_view_item_social to MailModel.MailType.Social,
+        R.id.menu_main_navigation_view_item_promotions to MailModel.MailType.Promotion,
+    )
+    private fun Map<Int, MailModel.MailType>.getKey(value: MailModel.MailType): Int? {
+        keys.forEach {
+            if(value == this[it]) return it
         }
+        return null
     }
 
     var selectDrawerMenuId: Int = R.id.menu_main_navigation_view_item_primary
@@ -71,12 +60,12 @@ class MainViewModel: BaseViewModel() {
         _setDrawerShown.value = SingleEvent(false)  // drawer layout close
         selectDrawerMenuId = id
         _drawerMenuSelectEvent.value = SingleEvent(id) // drawer menu item select set
-        MailTypeInfo.get(id)?.let {
-            _mailTypeSelect.value = it.mailType // id 에 매칭되는 mailType 을 select
+        mailInfo[id]?.let {
+            _mailTypeSelect.value = it
         }
     }
     fun selectMailType(mailType: MailModel.MailType){
-        MailTypeInfo.get(mailType)?.let { clickDrawerMenu(it.tabMenuId) }
+        mailInfo.getKey(mailType)?.let { clickDrawerMenu(it) }
     }
 
     fun setFragmentAccordingToDevice(width: Int, orientation: Int){
