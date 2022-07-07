@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shape="ring"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp"
+            >
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_person_circle"
+                />
+        </androidx.cardview.widget.CardView>
+        <TextView
+            app:layout_constraintTop_toTopOf="@id/cardView"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="@id/cardView"
+
+            android:id="@+id/tvSenderChar"
+            android:visibility="gone"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="P"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="10dp"
+            android:textColor="#3d3d3d"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:text="Nick"
+            android:id="@+id/tvSender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/tvSender"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:textColor="#3d3d3d"
+            android:text="title"
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintStart_toEndOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="10dp"
+            android:textColor="#8C8B8B"
+            android:text="content"
+            android:id="@+id/tvContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
