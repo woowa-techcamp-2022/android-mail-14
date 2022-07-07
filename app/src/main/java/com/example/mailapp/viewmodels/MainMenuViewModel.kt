@@ -37,11 +37,9 @@ class MainMenuViewModel: BaseViewModel() {
         currentSelectTabId = id
         when(id){
             R.id.menu_mail -> {
-                showToast("mail tab")
                 _showMailList.value = SingleEvent(Unit)
             }
             R.id.menu_setting -> {
-                showToast("setting tab")
                 _showSetting.value = SingleEvent(Unit)
             }
         }
