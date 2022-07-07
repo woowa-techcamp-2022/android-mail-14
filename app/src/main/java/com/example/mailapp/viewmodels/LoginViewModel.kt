@@ -1,10 +1,9 @@
-package com.example.mailapp.login
+package com.example.mailapp.viewmodels
 
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.mailapp.view.BaseViewModel
 import java.util.regex.Pattern
 
 class LoginViewModel: BaseViewModel() {

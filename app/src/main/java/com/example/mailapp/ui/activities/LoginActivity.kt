@@ -1,12 +1,11 @@
-package com.example.mailapp.login
+package com.example.mailapp.ui.activities
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.lifecycle.ViewModelProvider
-import com.example.mailapp.MainActivity
-import com.example.mailapp.view.BaseActivity
 import com.example.mailapp.databinding.ActivityLoginBinding
+import com.example.mailapp.viewmodels.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 

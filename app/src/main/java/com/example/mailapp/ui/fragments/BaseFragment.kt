@@ -1,4 +1,4 @@
-package com.example.mailapp
+package com.example.mailapp.ui.activities.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.example.mailapp.view.BaseViewModel
+import com.example.mailapp.viewmodels.BaseViewModel
 
 abstract class BaseFragment<T: ViewDataBinding, R: BaseViewModel>: Fragment() {
 

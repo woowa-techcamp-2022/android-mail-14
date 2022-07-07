@@ -1,4 +1,4 @@
-package com.example.mailapp
+package com.example.mailapp.ui.activities
 
 import android.content.Context
 import android.content.Intent
@@ -9,9 +9,12 @@ import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.mailapp.*
 import com.example.mailapp.databinding.ActivityMainBinding
+import com.example.mailapp.ui.activities.fragments.BottomMenuFragment
+import com.example.mailapp.ui.activities.fragments.RailMenuFragment
 import com.example.mailapp.util.getWindowWidthDp
-import com.example.mailapp.view.BaseActivity
+import com.example.mailapp.viewmodels.MainViewModel
 
 /**
  * fragment 의 tag 정보는 view model 에 type 과 함께 enum 으로 지장하고,

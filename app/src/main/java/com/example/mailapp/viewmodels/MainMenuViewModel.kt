@@ -1,9 +1,9 @@
-package com.example.mailapp
+package com.example.mailapp.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.mailapp.view.BaseViewModel
+import com.example.mailapp.R
 
 class MainMenuViewModel: BaseViewModel() {
     private val _selectTabId: MutableLiveData<Int> = MutableLiveData()

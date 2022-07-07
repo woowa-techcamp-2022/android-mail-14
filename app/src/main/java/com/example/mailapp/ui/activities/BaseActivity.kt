@@ -1,4 +1,4 @@
-package com.example.mailapp.view
+package com.example.mailapp.ui.activities
 
 import android.content.Context
 import android.os.Build
@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import com.example.mailapp.showToast
+import com.example.mailapp.viewmodels.BaseViewModel
 
 abstract class BaseActivity<T: ViewDataBinding, R: BaseViewModel>: AppCompatActivity() {
 
