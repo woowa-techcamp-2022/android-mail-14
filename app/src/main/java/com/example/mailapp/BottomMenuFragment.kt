@@ -2,16 +2,14 @@ package com.example.mailapp
 
 import android.util.Log
 import android.view.View
-import androidx.core.view.get
-import androidx.core.view.size
 import androidx.fragment.app.activityViewModels
-import com.example.mailapp.databinding.FragmentMenuBottomNavigationBinding
+import com.example.mailapp.databinding.FragmentBottomMenuBinding
 import com.example.mailapp.util.showToast
 
-class MenuBottomNavigationFragment: BaseFragment<FragmentMenuBottomNavigationBinding, MainMenuViewModel>() {
+class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewModel>() {
 
     override val layoutResId: Int
-        get() = R.layout.fragment_menu_bottom_navigation
+        get() = R.layout.fragment_bottom_menu
     override val viewModel: MainMenuViewModel by activityViewModels()
 
     override fun initData() {

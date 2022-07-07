@@ -65,8 +65,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val width = getWindowWidthDp()
         val bottomNaviFragmentTag = "bottom_navi_fragment"
         val railNaviFragmentTag = "rail_navi_fragment"
-        val bottomNaviFragment = (getFragmentAtTransaction(bottomNaviFragmentTag) ?: MenuBottomNavigationFragment()) to bottomNaviFragmentTag
-        val railNaviFragment = (getFragmentAtTransaction(railNaviFragmentTag) ?: MenuRailNavigationViewFragment()) to railNaviFragmentTag
+        val bottomNaviFragment = (getFragmentAtTransaction(bottomNaviFragmentTag) ?: BottomMenuFragment()) to bottomNaviFragmentTag
+        val railNaviFragment = (getFragmentAtTransaction(railNaviFragmentTag) ?: RailMenuFragment()) to railNaviFragmentTag
         val fragmentInfo: Pair<Fragment, String> = when(resources.configuration.orientation){
             Configuration.ORIENTATION_LANDSCAPE -> {
                 Log.d("TAG", "orientation changed[ORIENTATION_LANDSCAPE][$width]")

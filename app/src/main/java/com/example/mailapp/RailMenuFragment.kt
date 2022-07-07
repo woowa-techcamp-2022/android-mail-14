@@ -2,11 +2,11 @@ package com.example.mailapp
 
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.example.mailapp.databinding.FragmentMenuNavigationRailBinding
+import com.example.mailapp.databinding.FragmentRailMenuBinding
 
-class MenuRailNavigationViewFragment: BaseFragment<FragmentMenuNavigationRailBinding, MainMenuViewModel>() {
+class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>() {
     override val layoutResId: Int
-        get() = R.layout.fragment_menu_navigation_rail
+        get() = R.layout.fragment_rail_menu
     override val viewModel: MainMenuViewModel by activityViewModels()
 
     override fun initData() {
