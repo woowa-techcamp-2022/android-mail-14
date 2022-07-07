@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.example.mailapp.util.showToast
 import com.example.mailapp.viewmodels.BaseViewModel
 
 abstract class BaseFragment<T: ViewDataBinding, R: BaseViewModel>: Fragment() {
@@ -50,6 +51,10 @@ abstract class BaseFragment<T: ViewDataBinding, R: BaseViewModel>: Fragment() {
     abstract fun bind()
 
     private fun bindAtBase(){
-
+        viewModel.showToastEvent.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                showToast(it)
+            }
+        }
     }
 }

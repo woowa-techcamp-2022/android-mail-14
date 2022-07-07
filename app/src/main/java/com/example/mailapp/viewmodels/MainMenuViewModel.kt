@@ -4,10 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mailapp.R
+import com.example.mailapp.model.SingleEvent
 
 class MainMenuViewModel: BaseViewModel() {
-    private val _selectTabId: MutableLiveData<Int> = MutableLiveData()
-    val selectTabId: LiveData<Int> = _selectTabId
+    private val _selectTabId: MutableLiveData<SingleEvent<Int>> = MutableLiveData()
+    val selectTabId: LiveData<SingleEvent<Int>> = _selectTabId
 
     /**
      * data
@@ -18,7 +19,7 @@ class MainMenuViewModel: BaseViewModel() {
      * event from view
      */
     fun setDefaultTab(){
-        _selectTabId.value = currentSelectTabId ?: 0
+        _selectTabId.value = SingleEvent(currentSelectTabId ?: 0)
     }
 
     fun clickTab(id: Int){

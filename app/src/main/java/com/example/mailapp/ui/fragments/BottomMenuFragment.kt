@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
 import com.example.mailapp.databinding.FragmentBottomMenuBinding
-import com.example.mailapp.util.showToast
 import com.example.mailapp.viewmodels.MainMenuViewModel
 
 class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewModel>() {
@@ -31,13 +30,11 @@ class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewMo
     }
 
     override fun bind() {
-        viewModel.showToastEvent.observe(this){
-            showToast(it)
-        }
-
-        viewModel.selectTabId.observe(this){
-            Log.d("TAG", "bottomNavigationView click debug selectTab observe => id[$it]")
-            vd.bottomNavigationView.selectedItemId = it // 잘못된 id값이면 아무 일도 일어나지 않는다 => 내부에서 findItem 을 실시
+        viewModel.selectTabId.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                Log.d("TAG", "bottomNavigationView click debug selectTab observe => id[$it]")
+                vd.bottomNavigationView.selectedItemId = it // 잘못된 id값이면 아무 일도 일어나지 않는다 => 내부에서 findItem 을 실시
+            }
         }
     }
 }

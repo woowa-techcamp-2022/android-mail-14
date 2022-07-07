@@ -30,8 +30,10 @@ abstract class BaseActivity<T: ViewDataBinding, R: BaseViewModel>: AppCompatActi
     abstract fun bind(savedInstanceState: Bundle?)
 
     private fun bindAtBase(){
-        viewModel.showToastEvent.observe(this){
-            showToast(it)
+        viewModel.showToastEvent.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                showToast(it)
+            }
         }
     }
 
