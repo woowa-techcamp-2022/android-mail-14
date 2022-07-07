@@ -2,6 +2,7 @@
     <string name="app_name">MailApp</string>
 
     <string name="btn_next">next</string>
+    <string name="btn_close">닫기</string>
 
     <string name="menu_main_navigation_view_header_title">WMail</string>
 

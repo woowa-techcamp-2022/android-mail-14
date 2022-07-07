@@ -6,6 +6,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
 import com.example.mailapp.databinding.FragmentSettingBinding
+import com.example.mailapp.util.DialogUtil
 import com.example.mailapp.util.showToast
 import com.example.mailapp.viewmodels.SettingViewModel
 
@@ -37,7 +38,9 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>() 
     override fun bind() {
         viewModel.finishViewEvent.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
-                showToast(it)
+                if(it.isNotBlank()){
+                    DialogUtil.show(mContext ?: return@let, it, getString(R.string.btn_close)){ }
+                }
             }
         }
 
