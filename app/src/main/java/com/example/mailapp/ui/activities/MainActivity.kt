@@ -108,10 +108,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun applyFragment(fragment: Fragment, tag: String){
         supportFragmentManager.beginTransaction().let {
             if(supportFragmentManager.fragments.isEmpty()) {
-                it.add(R.id.containerFragment, fragment, tag).commit()
+                it.add(R.id.containerFragmentMain, fragment, tag).commit()
             }
             else {
-                it.replace(R.id.containerFragment, fragment, tag).commit()
+                it.replace(R.id.containerFragmentMain, fragment, tag).commit()
             }
         }
     }
