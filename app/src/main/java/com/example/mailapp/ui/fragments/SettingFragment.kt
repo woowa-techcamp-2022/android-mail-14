@@ -2,6 +2,7 @@ package com.example.mailapp.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
 import com.example.mailapp.databinding.FragmentSettingBinding
@@ -14,10 +15,10 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>() 
         const val emailExtraKey = "EXTRA_EMAIL"
         fun get(nickname: String?, email: String?): SettingFragment{
             return SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(nicknameExtraKey, nickname)
-                    putString(emailExtraKey, email)
-                }
+                arguments = bundleOf(
+                    nicknameExtraKey to nickname,
+                    emailExtraKey to email
+                )
             }
         }
     }
