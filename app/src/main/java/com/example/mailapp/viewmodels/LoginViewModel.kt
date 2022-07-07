@@ -34,7 +34,15 @@ class LoginViewModel: BaseViewModel() {
     private var inputNickname: String? = null
     private var inputEmail: String? = null
     private var inputNicknameCorrect = false
+        set(value) {
+            field = value
+            _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
+        }
     private var inputEmailCorrect = false
+        set(value) {
+            field = value
+            _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
+        }
 
 
     // 정규식 테스트 사이트 https://regex101.com/r/cO8lqs/11
@@ -43,13 +51,10 @@ class LoginViewModel: BaseViewModel() {
     val nicknameInputRule: (String)->(Boolean) = {
         inputNickname = it
         val nicknamePattern = Pattern.compile("^[a-zA-Z0-9]+$")
-        Log.d("TAG", "nickname[$it] contain char => ${it.contains(Regex("^[a-zA-Z]"))}")
-        Log.d("TAG", "nickname[$it] contain num => ${it.contains(Regex("[0-9]"))}")
-        inputNicknameCorrect = it.length in 4..12 &&
+        inputNicknameCorrect = it.length in 4..12 && // 길이 제한
                 nicknamePattern.matcher(it).matches() && // 숫자나 영단어만 허용 -> 모두 숫자나 모두 영단어로 이루어진 경우 포함
                 it.contains(Regex("^[a-zA-Z]")) && // 영단어가 포함되어있는지
                 it.contains(Regex("[0-9]"))  // 숫자가 포함되어있는지
-        _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
         inputNicknameCorrect
     }
 
@@ -62,7 +67,6 @@ class LoginViewModel: BaseViewModel() {
     val emailInputRule: (String)->(Boolean) = {
         inputEmail = it
         inputEmailCorrect = Patterns.EMAIL_ADDRESS.matcher(it).matches()
-        _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
         inputEmailCorrect
     }
 
