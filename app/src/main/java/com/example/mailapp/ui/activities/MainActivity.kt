@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.mailapp.*
 import com.example.mailapp.databinding.ActivityMainBinding
-import com.example.mailapp.ui.activities.fragments.BottomMenuFragment
-import com.example.mailapp.ui.activities.fragments.RailMenuFragment
+import com.example.mailapp.ui.fragments.BottomMenuFragment
+import com.example.mailapp.ui.fragments.RailMenuFragment
 import com.example.mailapp.util.getWindowWidthDp
 import com.example.mailapp.viewmodels.MainViewModel
 

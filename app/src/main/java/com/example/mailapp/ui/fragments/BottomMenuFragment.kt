@@ -1,4 +1,4 @@
-package com.example.mailapp.ui.activities.fragments
+package com.example.mailapp.ui.fragments
 
 import android.util.Log
 import android.view.View

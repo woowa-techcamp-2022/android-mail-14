@@ -1,4 +1,4 @@
-package com.example.mailapp.ui.activities.fragments
+package com.example.mailapp.ui.fragments
 
 import android.util.Log
 import android.view.View
@@ -19,6 +19,7 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
 
     override fun initView(view: View) {
         setListener()
+        viewModel.setDefaultTab()
     }
 
     private fun setListener(){
