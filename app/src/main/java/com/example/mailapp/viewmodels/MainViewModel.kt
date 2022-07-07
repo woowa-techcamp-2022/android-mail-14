@@ -11,6 +11,9 @@ class MainViewModel: BaseViewModel() {
     /**
      * event
      */
+    private val _drawerMenuSelectEvent: MutableLiveData<SingleEvent<Int>> = MutableLiveData()
+    val drawerMenuSelectEvent: LiveData<SingleEvent<Int>> = _drawerMenuSelectEvent
+
     private val _setDrawerShown: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
     val setDrawerShown: LiveData<SingleEvent<Boolean>> = _setDrawerShown
 
@@ -25,6 +28,9 @@ class MainViewModel: BaseViewModel() {
         RailMenu("rail_menu")
     }
 
+    var selectDrawerMenuId: Int = R.id.menu_main_navigation_view_item_primary
+        private set
+
     /**
      * event from view
      */
@@ -35,7 +41,15 @@ class MainViewModel: BaseViewModel() {
     }
 
     fun clickDrawerMenu(id: Int){
+        Log.d("TAG", "primary[${R.id.menu_main_navigation_view_item_primary}]," +
+                " social[${R.id.menu_main_navigation_view_item_social}]," +
+                " promotion[${R.id.menu_main_navigation_view_item_promotions}]")
+
+        Log.d("TAG", "clickDrawerMenu [$id]")
+
         _setDrawerShown.value = SingleEvent(false)
+        selectDrawerMenuId = id
+        _drawerMenuSelectEvent.value = SingleEvent(id)
         when(id){
             R.id.menu_main_navigation_view_item_primary -> {
                 showToast("click primary")

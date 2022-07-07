@@ -69,15 +69,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
         vd.navigationView.apply {
             setNavigationItemSelectedListener {
-                it.isChecked = true
                 viewModel.clickDrawerMenu(it.itemId)
                 true
             }
-            setCheckedItem(R.id.menu_main_navigation_view_item_primary)  // default select item
         }
+        viewModel.clickDrawerMenu(viewModel.selectDrawerMenuId) // default select item
     }
 
     override fun bind(savedInstanceState: Bundle?) {
+        viewModel.drawerMenuSelectEvent.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                Log.d("TAG", "drawerMenuSelectEvent [$it]")
+                vd.navigationView.setCheckedItem(it)
+            }
+        }
+
         viewModel.setDrawerShown.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
                 Log.d("TAG", "setDrawerShown event [$it]")
