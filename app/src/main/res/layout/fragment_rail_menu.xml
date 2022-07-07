@@ -15,5 +15,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+
+        <com.google.android.material.navigationrail.NavigationRailView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:menu="@menu/menu_mail_setting_tab"
+            android:id="@+id/railNavigationView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
