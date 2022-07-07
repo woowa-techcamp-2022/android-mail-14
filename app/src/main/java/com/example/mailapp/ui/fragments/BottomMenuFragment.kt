@@ -33,7 +33,13 @@ class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewMo
         viewModel.selectTabId.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
                 Log.d("TAG", "bottomNavigationView click debug selectTab observe => id[$it]")
-                vd.bottomNavigationView.selectedItemId = it // 잘못된 id값이면 아무 일도 일어나지 않는다 => 내부에서 findItem 을 실시
+                if(it<0){
+                    vd.bottomNavigationView.selectedItemId = vd.bottomNavigationView.menu[0].itemId
+                    return@observe
+                }
+                vd.bottomNavigationView.selectedItemId = it // 잘못된 id 값이면 아무 일도 일어나지 않는다 => 내부에서 findItem 을 실시
+            }
+        }
             }
         }
     }

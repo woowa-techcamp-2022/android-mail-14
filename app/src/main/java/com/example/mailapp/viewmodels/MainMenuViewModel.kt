@@ -19,7 +19,7 @@ class MainMenuViewModel: BaseViewModel() {
      * event from view
      */
     fun setDefaultTab(){
-        _selectTabId.value = SingleEvent(currentSelectTabId ?: 0)
+        _selectTabId.value = SingleEvent(currentSelectTabId ?: -1)
     }
 
     fun clickTab(id: Int){
