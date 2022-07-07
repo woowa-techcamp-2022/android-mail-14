@@ -2,14 +2,12 @@ package com.example.mailapp.ui.activities
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.mailapp.*
 import com.example.mailapp.databinding.ActivityMainBinding
 import com.example.mailapp.ui.fragments.BottomMenuFragment
@@ -42,6 +40,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 //        setContentView(R.layout.activity_main)
     }
 
+    override fun onBackPressed() {
+        when {
+            vd.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                vd.drawerLayout.closeDrawers()
+            }
+            else -> super.onBackPressed()
+        }
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
 
     }
@@ -49,53 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun initView(savedInstanceState: Bundle?) {
         setSupportActionBar(vd.toolbar)
         initNavigationView()
-        setFragmentAccordingToDevice()
-    }
-
-    private fun setFragmentAccordingToDevice(){
-        val fragmentInfo = getFragmentAccordingToDevice()
-        supportFragmentManager.beginTransaction().let {
-            if(supportFragmentManager.fragments.isEmpty())
-                it.add(R.id.containerFragment, fragmentInfo.first, fragmentInfo.second).commit()
-            else
-                it.replace(R.id.containerFragment, fragmentInfo.first, fragmentInfo.second).commit()
-        }
-    }
-
-    private fun getFragmentAtTransaction(tag: String): Fragment? {
-        return supportFragmentManager.findFragmentByTag(tag)
-    }
-    private fun getFragmentAccordingToDevice(): Pair<Fragment, String>{
-        val width = getWindowWidthDp()
-        val bottomNaviFragmentTag = "bottom_navi_fragment"
-        val railNaviFragmentTag = "rail_navi_fragment"
-        val bottomNaviFragment = (getFragmentAtTransaction(bottomNaviFragmentTag) ?: BottomMenuFragment()) to bottomNaviFragmentTag
-        val railNaviFragment = (getFragmentAtTransaction(railNaviFragmentTag) ?: RailMenuFragment()) to railNaviFragmentTag
-        val fragmentInfo: Pair<Fragment, String> = when(resources.configuration.orientation){
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                Log.d("TAG", "orientation changed[ORIENTATION_LANDSCAPE][$width]")
-                if(width >= 600){
-                    railNaviFragment
-                }else{
-                    bottomNaviFragment
-                }
-            }
-            // 태블릿의 경우 가로가 더 길때 세로모드일지, 가로모드일지 구분이 애매해서 일단 세로모드일때도 width 체크 코드 추가
-            Configuration.ORIENTATION_PORTRAIT -> {
-                Log.d("TAG", "orientation changed[ORIENTATION_PORTRAIT][$width]")
-                if(width >= 600){
-                    railNaviFragment
-                }else{
-                    bottomNaviFragment
-                }
-            }
-            Configuration.ORIENTATION_UNDEFINED -> {
-                Log.d("TAG", "orientation changed[ORIENTATION_UNDEFINED]")
-                bottomNaviFragment
-            }
-            else -> bottomNaviFragment
-        }
-        return fragmentInfo
+        viewModel.setFragmentAccordingToDevice(getWindowWidthDp(), resources.configuration.orientation)
     }
 
     private fun initNavigationView(){
@@ -105,37 +66,62 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_navigation_view_button) // 뒤로가기 버튼 이미지 설정
         }
+
         vd.navigationView.apply {
             setNavigationItemSelectedListener {
                 it.isChecked = true
-                vd.drawerLayout.closeDrawers()
-                when(it.itemId){
-                    R.id.menu_main_navigation_view_item_primary -> {
-                        showToast("click primary")
-                    }
-                    R.id.menu_main_navigation_view_item_social -> {
-                        showToast("click social")
-                    }
-                    R.id.menu_main_navigation_view_item_promotions -> {
-                        showToast("click promotions")
-                    }
-                }
+                viewModel.clickDrawerMenu(it.itemId)
                 true
             }
             setCheckedItem(R.id.menu_main_navigation_view_item_primary)  // default select item
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home -> {
-                vd.drawerLayout.openDrawer(GravityCompat.START)
+    override fun bind(savedInstanceState: Bundle?) {
+        viewModel.setDrawerShown.observe(this){ event ->
+            event.getContentIfNotHandled()?.let {
+                Log.d("TAG", "setDrawerShown event [$it]")
+                if(vd.drawerLayout.isDrawerOpen(GravityCompat.START) == it)
+                    return@observe
+                if(it)
+                    vd.drawerLayout.openDrawer(GravityCompat.START)
+                else
+                    vd.drawerLayout.closeDrawers()
             }
         }
-        return super.onOptionsItemSelected(item)
+
+        viewModel.showFragmentInfo.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                val fragment: Fragment = when(it){
+                    MainViewModel.FragmentInfo.BottomMenu -> {
+                        (getFragmentFromTransaction(it.tag) ?: BottomMenuFragment())
+                    }
+                    MainViewModel.FragmentInfo.RailMenu -> {
+                        (getFragmentFromTransaction(it.tag) ?: RailMenuFragment())
+                    }
+                }
+                applyFragment(fragment, it.tag)
+            }
+        }
     }
 
-    override fun bind(savedInstanceState: Bundle?) {
+    private fun applyFragment(fragment: Fragment, tag: String){
+        supportFragmentManager.beginTransaction().let {
+            if(supportFragmentManager.fragments.isEmpty()) {
+                it.add(R.id.containerFragment, fragment, tag).commit()
+            }
+            else {
+                it.replace(R.id.containerFragment, fragment, tag).commit()
+            }
+        }
+    }
 
+    private fun getFragmentFromTransaction(tag: String): Fragment? {
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.clickOptionMenu(item.itemId)
+        return super.onOptionsItemSelected(item)
     }
 }
