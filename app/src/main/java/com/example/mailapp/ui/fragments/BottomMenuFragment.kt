@@ -1,7 +1,9 @@
 package com.example.mailapp.ui.fragments
 
+import android.content.Context
 import android.util.Log
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
@@ -13,6 +15,28 @@ class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewMo
     override val layoutResId: Int
         get() = R.layout.fragment_bottom_menu
     override val viewModel: MainMenuViewModel by activityViewModels()
+
+    private val onBackPressedCallback = object: OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+            Log.d("TAG", "onBackPressed at bottom menu")
+            when(childFragmentManager.fragments.firstOrNull()){
+                is SettingFragment -> { // setting fragment 가 top 일때 -> mail fragment replace
+                    viewModel.setSelectTab(vd.bottomNavigationView.menu[0].itemId)
+                }
+                is MailListFragment -> {}
+                else -> requireActivity().finish()
+            }
+        }
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onBackPressedCallback.remove()
+    }
 
     override fun initData() {
 
