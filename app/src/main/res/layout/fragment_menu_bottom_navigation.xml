@@ -15,5 +15,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:menu="@menu/menu_mail_setting_tab"
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

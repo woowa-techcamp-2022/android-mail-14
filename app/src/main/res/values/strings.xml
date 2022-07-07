@@ -8,4 +8,7 @@
     <string name="menu_main_navigation_view_item_primary">Primary</string>
     <string name="menu_main_navigation_view_item_social">Social</string>
     <string name="menu_main_navigation_view_item_promotions">Promotion</string>
+
+    <string name="menu_mail">Mail</string>
+    <string name="menu_setting">Setting</string>
 </resources>
