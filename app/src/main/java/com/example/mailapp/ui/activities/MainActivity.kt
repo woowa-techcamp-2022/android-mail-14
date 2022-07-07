@@ -8,9 +8,12 @@ import android.view.*
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import com.example.mailapp.*
 import com.example.mailapp.databinding.ActivityMainBinding
+import com.example.mailapp.model.MailModel
 import com.example.mailapp.ui.fragments.BottomMenuFragment
+import com.example.mailapp.ui.fragments.MailTypeSelectActivity
 import com.example.mailapp.ui.fragments.RailMenuFragment
 import com.example.mailapp.util.getWindowWidthDp
 import com.example.mailapp.viewmodels.MainViewModel
@@ -21,7 +24,7 @@ import com.example.mailapp.viewmodels.MainViewModel
  *
  * enum 값에 따라서 fragment 표시 -> 해당 event 보내기 위한 event 는 width 정보와 가로, 세로 정보를 함께 보낸다
  */
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTypeSelectActivity {
     companion object {
         fun get(context: Context?, nickname: String, email: String): Intent {
             return Intent(context, MainActivity::class.java).apply {
@@ -34,6 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
     override val vd: ActivityMainBinding by lazy { ActivityMainBinding.inflate(LayoutInflater.from(this)) }
     override val viewModel: MainViewModel by viewModels()
+
+    override val mailType: LiveData<MailModel.MailType>
+        get() = viewModel.mailTypeSelect
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

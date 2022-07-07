@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mailapp.R
+import com.example.mailapp.model.MailModel
 import com.example.mailapp.model.SingleEvent
 
 class MainViewModel: BaseViewModel() {
@@ -19,6 +20,9 @@ class MainViewModel: BaseViewModel() {
 
     private val _showFragmentInfo: MutableLiveData<SingleEvent<FragmentInfo>> = MutableLiveData()
     val showFragmentInfo: LiveData<SingleEvent<FragmentInfo>> = _showFragmentInfo
+
+    private val _mailTypeSelect: MutableLiveData<MailModel.MailType> = MutableLiveData()
+    val mailTypeSelect: LiveData<MailModel.MailType> = _mailTypeSelect
 
     /**
      * data
@@ -53,12 +57,15 @@ class MainViewModel: BaseViewModel() {
         when(id){
             R.id.menu_main_navigation_view_item_primary -> {
                 showToast("click primary")
+                _mailTypeSelect.value = MailModel.MailType.Primary
             }
             R.id.menu_main_navigation_view_item_social -> {
                 showToast("click social")
+                _mailTypeSelect.value = MailModel.MailType.Social
             }
             R.id.menu_main_navigation_view_item_promotions -> {
                 showToast("click promotions")
+                _mailTypeSelect.value = MailModel.MailType.Promotion
             }
         }
     }
