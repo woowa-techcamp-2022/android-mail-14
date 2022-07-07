@@ -3,4 +3,7 @@
     <declare-styleable name="EditTextWithRule">
 
     </declare-styleable>
+
+    <attr name="textTitleColor" format="reference|color"/>
+    <attr name="textContentColor" format="reference|color"/>
 </resources>
