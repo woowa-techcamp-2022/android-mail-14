@@ -15,5 +15,5 @@ abstract class BaseViewModel: ViewModel() {
 
     private val _finishViewEvent: MutableLiveData<SingleEvent<String>> = MutableLiveData()
     val finishViewEvent: LiveData<SingleEvent<String>> = _finishViewEvent
-    protected fun finisView(message: String) = _finishViewEvent.postValue(SingleEvent(message))
+    protected fun finisView(message: String = "") = _finishViewEvent.postValue(SingleEvent(message))
 }
