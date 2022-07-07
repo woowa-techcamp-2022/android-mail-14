@@ -141,11 +141,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTyp
     }
 
     override fun selectMailType(mailType: MailModel.MailType) {
-        when(mailType){
-            MailModel.MailType.Primary -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_primary)
-            MailModel.MailType.Social -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_social)
-            MailModel.MailType.Promotion -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_promotions)
-        }
+        viewModel.selectMailType(mailType)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

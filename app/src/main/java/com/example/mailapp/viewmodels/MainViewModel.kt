@@ -31,6 +31,28 @@ class MainViewModel: BaseViewModel() {
         BottomMenu("bottom_menu"),
         RailMenu("rail_menu")
     }
+    enum class MailTypeInfo(
+        val mailType: MailModel.MailType,
+        val tabMenuId: Int
+    ){
+        Primary(MailModel.MailType.Primary, R.id.menu_main_navigation_view_item_primary),
+        Social(MailModel.MailType.Social, R.id.menu_main_navigation_view_item_social),
+        Promotion(MailModel.MailType.Promotion, R.id.menu_main_navigation_view_item_promotions);
+        companion object {
+            fun get(mailType: MailModel.MailType): MailTypeInfo? {
+                values().forEach {
+                    if(it.mailType == mailType) return it
+                }
+                return null
+            }
+            fun get(tabMenuId: Int): MailTypeInfo? {
+                values().forEach {
+                    if(it.tabMenuId == tabMenuId) return it
+                }
+                return null
+            }
+        }
+    }
 
     var selectDrawerMenuId: Int = R.id.menu_main_navigation_view_item_primary
         private set
@@ -45,29 +67,16 @@ class MainViewModel: BaseViewModel() {
     }
 
     fun clickDrawerMenu(id: Int){
-        Log.d("TAG", "primary[${R.id.menu_main_navigation_view_item_primary}]," +
-                " social[${R.id.menu_main_navigation_view_item_social}]," +
-                " promotion[${R.id.menu_main_navigation_view_item_promotions}]")
-
         Log.d("TAG", "clickDrawerMenu [$id]")
-
-        _setDrawerShown.value = SingleEvent(false)
+        _setDrawerShown.value = SingleEvent(false)  // drawer layout close
         selectDrawerMenuId = id
-        _drawerMenuSelectEvent.value = SingleEvent(id)
-        when(id){
-            R.id.menu_main_navigation_view_item_primary -> {
-                showToast("click primary")
-                _mailTypeSelect.value = MailModel.MailType.Primary
-            }
-            R.id.menu_main_navigation_view_item_social -> {
-                showToast("click social")
-                _mailTypeSelect.value = MailModel.MailType.Social
-            }
-            R.id.menu_main_navigation_view_item_promotions -> {
-                showToast("click promotions")
-                _mailTypeSelect.value = MailModel.MailType.Promotion
-            }
+        _drawerMenuSelectEvent.value = SingleEvent(id) // drawer menu item select set
+        MailTypeInfo.get(id)?.let {
+            _mailTypeSelect.value = it.mailType // id 에 매칭되는 mailType 을 select
         }
+    }
+    fun selectMailType(mailType: MailModel.MailType){
+        MailTypeInfo.get(mailType)?.let { clickDrawerMenu(it.tabMenuId) }
     }
 
     fun setFragmentAccordingToDevice(width: Int, orientation: Int){
