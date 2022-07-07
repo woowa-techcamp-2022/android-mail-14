@@ -44,19 +44,23 @@ class BottomMenuFragment: BaseFragment<FragmentBottomMenuBinding, MainMenuViewMo
 
         viewModel.showMailList.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
-                childFragmentManager.beginTransaction().replace(R.id.containerFragmentBottomMenu, MailListFragment()).commit()
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.containerFragmentBottomMenu, MailListFragment())
+                    .commit()
             }
         }
         viewModel.showSetting.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
                 Log.d("TAG", "extra data bundle nick[${arguments?.getString(SettingFragment.nicknameExtraKey)}] email[${arguments?.getString(SettingFragment.emailExtraKey)}]")
-                childFragmentManager.beginTransaction().replace(
-                    R.id.containerFragmentBottomMenu,
-                    SettingFragment.get(
-                        arguments?.getString(SettingFragment.nicknameExtraKey),
-                        arguments?.getString(SettingFragment.emailExtraKey)
+                childFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.containerFragmentBottomMenu,
+                        SettingFragment.get(
+                            arguments?.getString(SettingFragment.nicknameExtraKey),
+                            arguments?.getString(SettingFragment.emailExtraKey)
+                        )
                     )
-                ).commit()
+                    .commit()
             }
         }
     }
