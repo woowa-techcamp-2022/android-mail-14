@@ -43,11 +43,11 @@ class LoginViewModel: BaseViewModel() {
     val nicknameInputRule: (String)->(Boolean) = {
         inputNickname = it
         val nicknamePattern = Pattern.compile("^[a-zA-Z0-9]+$")
-        Log.d("TAG", "nickname[$it] contain char => ${it.contains(Regex("^[a-z]"))}")
+        Log.d("TAG", "nickname[$it] contain char => ${it.contains(Regex("^[a-zA-Z]"))}")
         Log.d("TAG", "nickname[$it] contain num => ${it.contains(Regex("[0-9]"))}")
         inputNicknameCorrect = it.length in 4..12 &&
                 nicknamePattern.matcher(it).matches() && // 숫자나 영단어만 허용 -> 모두 숫자나 모두 영단어로 이루어진 경우 포함
-                it.contains(Regex("^[a-z]")) && // 영단어가 포함되어있는지 
+                it.contains(Regex("^[a-zA-Z]")) && // 영단어가 포함되어있는지
                 it.contains(Regex("[0-9]"))  // 숫자가 포함되어있는지
         _nextButtonEnableEvent.value = inputNicknameCorrect && inputEmailCorrect
         inputNicknameCorrect
