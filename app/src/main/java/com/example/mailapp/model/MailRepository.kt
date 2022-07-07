@@ -8,20 +8,6 @@ import kotlin.random.Random
 class MailRepository {
 
     private val mails = ArrayList<MailModel>()
-    init {
-        makeDummyData()
-    }
-
-    fun fetchMailList(type: MailModel.MailType, completion: (List<MailModel>)->(Unit)){
-        Thread {
-            Thread.sleep(200)
-            val list = mails.filter { it.type == type }
-            Handler(Looper.getMainLooper()).post {
-                completion(list)
-            }
-        }.start()
-    }
-
     private val senders = arrayOf(
         "Peter Parker",
         "제임스",
@@ -49,6 +35,21 @@ class MailRepository {
         "초대장: 파티에 초대되었습니다.",
         "회의 안내: 회의에 참석할 시간입니다"
     )
+
+    init {
+        makeDummyData()
+    }
+
+    fun fetchMailList(type: MailModel.MailType, completion: (List<MailModel>)->(Unit)){
+        Thread {
+            Thread.sleep(200)
+            val list = mails.filter { it.type == type }
+            Handler(Looper.getMainLooper()).post {
+                completion(list)
+            }
+        }.start()
+    }
+
     private fun makeDummyData(){
         for(i in 0 until 100){
             val idx = Random.nextInt(senders.size)
