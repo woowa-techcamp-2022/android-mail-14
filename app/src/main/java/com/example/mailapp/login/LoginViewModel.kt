@@ -75,8 +75,10 @@ class LoginViewModel: BaseViewModel() {
      * event from view
      */
     fun restoreInputData(){
-        _nicknameInput.value = inputNickname
-        _emailInput.value = inputEmail
+        if(inputNickname != null)
+            _nicknameInput.value = inputNickname
+        if(inputEmail != null)
+            _emailInput.value = inputEmail
     }
 
     fun backgroundClick(){
