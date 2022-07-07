@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mailapp.model.MailModel
 import com.example.mailapp.model.MailRepository
+import com.example.mailapp.model.SingleEvent
 
 class MailListViewModel: BaseViewModel() {
     private val _progress: MutableLiveData<Boolean> = MutableLiveData()
@@ -16,6 +17,9 @@ class MailListViewModel: BaseViewModel() {
     private val _mailTypeData: MutableLiveData<MailModel.MailType> = MutableLiveData()
     val mailTypeData: LiveData<MailModel.MailType> = _mailTypeData
 
+    private val _changeMailTypeEvent: MutableLiveData<SingleEvent<MailModel.MailType>> = MutableLiveData()
+    val changeMailTypeEvent: LiveData<SingleEvent<MailModel.MailType>> = _changeMailTypeEvent
+
     private val mailRepository = MailRepository()
     private var mailType: MailModel.MailType = MailModel.MailType.Primary
         set(value) {
@@ -23,6 +27,15 @@ class MailListViewModel: BaseViewModel() {
             _mailTypeData.value = value
             field = value
         }
+
+    fun onBackPressed(){
+        when(mailType){
+            MailModel.MailType.Primary -> finisView()
+            else -> {
+                _changeMailTypeEvent.value = SingleEvent(MailModel.MailType.Primary)
+            }
+        }
+    }
 
     fun changeMailType(type: MailModel.MailType){
         mailType = type

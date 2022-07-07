@@ -12,9 +12,7 @@ import androidx.lifecycle.LiveData
 import com.example.mailapp.*
 import com.example.mailapp.databinding.ActivityMainBinding
 import com.example.mailapp.model.MailModel
-import com.example.mailapp.ui.fragments.BottomMenuFragment
-import com.example.mailapp.ui.fragments.MailTypeSelectActivity
-import com.example.mailapp.ui.fragments.RailMenuFragment
+import com.example.mailapp.ui.fragments.*
 import com.example.mailapp.util.getWindowWidthDp
 import com.example.mailapp.viewmodels.MainViewModel
 
@@ -49,6 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTyp
     }
 
     override fun onBackPressed() {
+        Log.d("TAG", "onBackPressed at main")
         when {
             vd.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
                 vd.drawerLayout.closeDrawers()
@@ -139,6 +138,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MailTyp
 
     private fun getFragmentFromTransaction(tag: String): Fragment? {
         return supportFragmentManager.findFragmentByTag(tag)
+    }
+
+    override fun selectMailType(mailType: MailModel.MailType) {
+        when(mailType){
+            MailModel.MailType.Primary -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_primary)
+            MailModel.MailType.Social -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_social)
+            MailModel.MailType.Promotion -> viewModel.clickDrawerMenu(R.id.menu_main_navigation_view_item_promotions)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

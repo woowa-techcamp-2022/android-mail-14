@@ -28,6 +28,10 @@ class MainMenuViewModel: BaseViewModel() {
         _selectTabId.value = SingleEvent(currentSelectTabId ?: -1)
     }
 
+    fun setSelectTab(id: Int) {
+        _selectTabId.value = SingleEvent(id)
+    }
+
     fun clickTab(id: Int){
         Log.d("TAG", "bottomNavigationView click debug click tab at view model => id[$id]")
         currentSelectTabId = id
