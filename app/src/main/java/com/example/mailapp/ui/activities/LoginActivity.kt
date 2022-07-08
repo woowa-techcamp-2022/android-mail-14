@@ -19,25 +19,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         Log.d("TAG","rotate debug => onCreate[$savedInstanceState]")
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        Log.d("TAG","rotate debug => onSaveInstanceState")
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        Log.d("TAG","rotate debug => onRestoreInstanceState")
-    }
-
     override fun initData(savedInstanceState: Bundle?) {
 
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         setListener()
-        if(savedInstanceState != null){
-            viewModel.restoreInputData()
-        }
+        viewModel.restoreInputData()
     }
     private fun setListener(){
         vd.background.setOnClickListener {
