@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.get
+import androidx.core.view.size
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.example.mailapp.R
 import com.example.mailapp.databinding.FragmentRailMenuBinding
@@ -18,13 +20,11 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
     private val onBackPressedCallback = object: OnBackPressedCallback(true){
         override fun handleOnBackPressed() {
             Log.d("TAG", "onBackPressed at bottom menu")
-            when(childFragmentManager.fragments.firstOrNull()){
-                is SettingFragment -> { // setting fragment 가 top 일때 -> mail fragment replace
-                    viewModel.setSelectTab(vd.railNavigationView.menu[0].itemId)
-                }
-                is MailListFragment -> {}
-                else -> requireActivity().finish()
-            }
+            Log.d("TAG", "backStack size : ${childFragmentManager.backStackEntryCount}")
+            if(childFragmentManager.backStackEntryCount != 0) {
+                childFragmentManager.popBackStack()
+            }else
+                requireActivity().finish()
         }
     }
     override fun onAttach(context: Context) {
@@ -51,6 +51,10 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
             viewModel.clickTab(it.itemId)
             true // 항목을 선택한 항목으로 표시하려면 true, 항목을 선택하지 않아야 하는 경우 false
         }
+
+        childFragmentManager.addOnBackStackChangedListener { // after add/push/pop
+            viewModel.backStackChanged(childFragmentManager.backStackEntryCount, childFragmentManager.fragments.firstOrNull()?.tag)
+        }
     }
 
     override fun bind() {
@@ -65,22 +69,44 @@ class RailMenuFragment: BaseFragment<FragmentRailMenuBinding, MainMenuViewModel>
             }
         }
 
+        viewModel.checkTabIdx.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                if(it in 0 until vd.railNavigationView.menu.size)
+                    vd.railNavigationView.menu[it].isChecked = true
+            }
+        }
+
         viewModel.showMailList.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
-                childFragmentManager.beginTransaction().replace(R.id.containerFragmentRailMenu, MailListFragment()).commit()
+                //모든 backStack 을 제거한다 -> mail 에서 뒤로가기를 누르면 앱이 종료되어야 한다
+                childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.containerFragmentRailMenu, MailListFragment(), it)
+                    .commit()
             }
         }
 
         viewModel.showSetting.observe(this){ event ->
             event.getContentIfNotHandled()?.let {
-                childFragmentManager.beginTransaction().replace(
-                    R.id.containerFragmentRailMenu,
-                    SettingFragment.get(
-                        arguments?.getString(SettingFragment.nicknameExtraKey),
-                        arguments?.getString(SettingFragment.emailExtraKey)
-                    )
-                ).commit()
+                replaceSettingFragment(it)
             }
         }
+    }
+
+    private fun replaceSettingFragment(tag: String){
+        Log.d("TAG", "extra data bundle nick[${arguments?.getString(SettingFragment.nicknameExtraKey)}] email[${arguments?.getString(SettingFragment.emailExtraKey)}]")
+        //setting 에서 뒤로가기를 누르면 mail 로 이동해야하니, 기존에 setting tag 의 backStack 과, 그 위의 backStack 들을 제거하고, add backStack 해준다
+        childFragmentManager.popBackStack(SettingFragment.TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        childFragmentManager.beginTransaction()
+            .replace(
+                R.id.containerFragmentRailMenu,
+                SettingFragment.get(
+                    arguments?.getString(SettingFragment.nicknameExtraKey),
+                    arguments?.getString(SettingFragment.emailExtraKey)
+                ),
+                tag
+            )
+            .addToBackStack(SettingFragment.TAG) // 현재 시점의 transaction 상태를 backStack 에 저장
+            .commit()
     }
 }
