@@ -12,6 +12,7 @@ import com.example.mailapp.viewmodels.SettingViewModel
 
 class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>() {
     companion object {
+        const val TAG = "setting_fragment"
         const val nicknameExtraKey = "EXTRA_NICKNAME"
         const val emailExtraKey = "EXTRA_EMAIL"
         fun get(nickname: String?, email: String?): SettingFragment{
@@ -36,13 +37,13 @@ class SettingFragment: BaseFragment<FragmentSettingBinding, SettingViewModel>() 
     }
 
     override fun bind() {
-        viewModel.finishViewEvent.observe(this){ event ->
-            event.getContentIfNotHandled()?.let {
-                if(it.isNotBlank()){
-                    DialogUtil.show(mContext ?: return@let, it, getString(R.string.btn_close)){ }
-                }
-            }
-        }
+//        viewModel.finishViewEvent.observe(this){ event ->
+//            event.getContentIfNotHandled()?.let {
+//                if(it.isNotBlank()){
+////                    DialogUtil.show(mContext ?: return@let, it, getString(R.string.btn_close)){ }
+//                }
+//            }
+//        }
 
         viewModel.nickname.observe(this){
             vd.tvNickname.text = it
