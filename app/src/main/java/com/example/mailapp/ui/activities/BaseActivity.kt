@@ -41,8 +41,10 @@ abstract class BaseActivity<T: ViewDataBinding, R: BaseViewModel>: AppCompatActi
         val imm = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
         if(shown) // flag 0은 추가동작이 없음을 알림
             imm.showSoftInput(view, 0)
-        else
+        else {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+            view.clearFocus()
+        }
     }
 
     protected fun setInputAdjustMode(adjustResize: Boolean){
